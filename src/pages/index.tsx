@@ -11,6 +11,7 @@ import Prismic from '@prismicio/client';
 
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
+import { formatDate } from '../utils/formatDate';
 
 interface Post {
   slug?: string;
@@ -43,11 +44,11 @@ export default function Home({ postsPagination }: HomeProps) {
           </Link>
           <span className={styles.soonDescription}>{post.data.subtitle}</span>
 
-          <div className={styles.userDate}>
-            <time>
+          <div className={commonStyles.userDate}>
+            <time className={commonStyles.time}>
               <AiOutlineCalendar size={18} /> {post.firstPublicationDate}
             </time>
-            <span className={styles.author}>
+            <span className={commonStyles.author}>
               <BiUser size={18} /> {post.data.author}
             </span>
           </div>
@@ -69,9 +70,7 @@ export const getStaticProps: GetStaticProps = async ctx => {
 
   const posts = postsResponse.results.map(post => ({
     slug: post.uid,
-    firstPublicationDate: format(new Date(post.first_publication_date), 'PP', {
-      locale: ptBR,
-    }),
+    firstPublicationDate: formatDate(new Date(post.first_publication_date)),
     data: {
       title: post.data.title[0].text,
       subtitle: post.data.subtitle,

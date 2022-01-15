@@ -5,7 +5,7 @@
 }
 
 :root {
-  --highilight: #ff57b2;
+  --highlight: #ff57b2;
   --heading: #f8f8f8;
   --background: #1a1d23;
   --info: #bbbbbb;
@@ -30,9 +30,4 @@ button {
 
 button {
   cursor: pointer;
-}
-
-#main-container {
-  max-width: 1120px;
-  margin: 30px auto;
 }

@@ -8,7 +8,7 @@ import App, { getStaticProps } from '../../pages';
 
 interface Post {
   uid?: string;
-  first_publication_date: string | null;
+  firstPublicationDate: string | null;
   data: {
     title: string;
     subtitle: string;
@@ -17,7 +17,7 @@ interface Post {
 }
 
 interface PostPagination {
-  next_page: string;
+  nextPage: string;
   results: Post[];
 }
 
@@ -30,11 +30,11 @@ interface GetStaticPropsResult {
 }
 
 const mockedQueryReturn = {
-  next_page: 'link',
+  nextPage: 'link',
   results: [
     {
       uid: 'como-utilizar-hooks',
-      first_publication_date: '2021-03-15T19:25:28+0000',
+      firstPublicationDate: '2021-03-15T19:25:28+0000',
       data: {
         title: 'Como utilizar Hooks',
         subtitle: 'Pensando em sincronização em vez de ciclos de vida',
@@ -43,7 +43,7 @@ const mockedQueryReturn = {
     },
     {
       uid: 'criando-um-app-cra-do-zero',
-      first_publication_date: '2021-03-25T19:27:35+0000',
+      firstPublicationDate: '2021-03-25T19:27:35+0000',
       data: {
         title: 'Criando um app CRA do zero',
         subtitle:
@@ -88,11 +88,11 @@ describe('Home', () => {
       return Promise.resolve({
         json: () =>
           Promise.resolve({
-            next_page: null,
+            nextPage: null,
             results: [
               {
                 uid: 'criando-um-app-cra-do-zero',
-                first_publication_date: '2021-03-25T19:27:35+0000',
+                firstPublicationDate: '2021-03-25T19:27:35+0000',
                 data: {
                   title: 'Criando um app CRA do zero',
                   subtitle:
@@ -115,8 +115,8 @@ describe('Home', () => {
       getStaticPropsContext
     )) as GetStaticPropsResult;
 
-    expect(response.props.postsPagination.next_page).toEqual(
-      postsPaginationReturn.next_page
+    expect(response.props.postsPagination.nextPage).toEqual(
+      postsPaginationReturn.nextPage
     );
     expect(response.props.postsPagination.results).toEqual(
       expect.arrayContaining([
@@ -176,7 +176,7 @@ describe('Home', () => {
     postsPagination.results = [
       {
         uid: 'como-utilizar-hooks',
-        first_publication_date: '2021-03-15T19:25:28+0000',
+        firstPublicationDate: '2021-03-15T19:25:28+0000',
         data: {
           title: 'Como utilizar Hooks',
           subtitle: 'Pensando em sincronização em vez de ciclos de vida',
@@ -204,7 +204,7 @@ describe('Home', () => {
 
   it('should not be able to load more posts if not available', async () => {
     const postsPagination = mockedQueryReturn;
-    postsPagination.next_page = null;
+    postsPagination.nextPage = null;
 
     render(<App postsPagination={postsPagination} />);
 

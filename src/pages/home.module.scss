@@ -1,5 +1,6 @@
 .container {
-  margin-top: 60px;
+  max-width: 1120px;
+  margin: 60px auto;
 }
 
 .box {
@@ -32,26 +33,6 @@
     line-height: 2.2rem;
     text-align: justify;
     color: var(--body);
-  }
-
-  .userDate {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-
-    time,
-    .author {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 14px;
-      line-height: 17px;
-
-      color: var(--info);
-    }
   }
 
   & + .box {

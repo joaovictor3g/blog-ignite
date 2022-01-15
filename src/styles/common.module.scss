@@ -1,1 +1,20 @@
-// TODO
+.userDate {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  .time,
+  .author,
+  .readingTime {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+
+    color: var(--info);
+  }
+}

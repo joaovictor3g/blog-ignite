@@ -1,1 +1,69 @@
-// TODO
+.container {
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    object-fit: fill;
+  }
+
+  .title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 4.8rem;
+    line-height: 5.8rem;
+    letter-spacing: -0.5px;
+  }
+}
+
+.content {
+  max-width: 1120px;
+  margin: 60px auto;
+}
+
+.box {
+  margin-top: 64px;
+
+  .heading {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 3.6rem;
+    line-height: 140%;
+
+    text-align: justify;
+  }
+
+  .body {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 140%;
+
+    text-align: justify;
+
+    color: var(--body);
+
+    p,
+    ul {
+      margin: 1.5rem 0;
+    }
+
+    ul {
+      padding-left: 1.5rem;
+
+      li {
+        margin: 0.5rem 0;
+      }
+    }
+
+    a {
+      color: var(--highlight);
+      text-decoration: none;
+      transition: filter 0.2s;
+
+      &:hover {
+        text-decoration: underline;
+        filter: brightness(0.6);
+      }
+    }
+  }
+}
