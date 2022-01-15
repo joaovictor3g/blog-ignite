@@ -26,7 +26,7 @@ interface Post {
     author: string;
     content: {
       heading: string;
-      body: Record<string, unknown>[];
+      body: string;
     }[];
   };
 }
