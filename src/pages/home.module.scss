@@ -1,1 +1,60 @@
-// TODO
+.container {
+  margin-top: 60px;
+}
+
+.box {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+
+  .title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2.8rem;
+    line-height: 3.4rem;
+    text-align: justify;
+    letter-spacing: -0.5px;
+    color: var(--heading);
+
+    text-decoration: none;
+    transition: filter 0.2s, text-decoration 0.2s;
+
+    &:hover {
+      filter: brightness(0.6);
+      text-decoration: underline;
+    }
+  }
+
+  .soonDescription {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    text-align: justify;
+    color: var(--body);
+  }
+
+  .userDate {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    time,
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 17px;
+
+      color: var(--info);
+    }
+  }
+
+  & + .box {
+    margin-top: 40px;
+  }
+}
