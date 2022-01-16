@@ -13,6 +13,7 @@ import { FiClock } from 'react-icons/fi';
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
 import { formatDate } from '../../utils/formatDate';
+import { UtterancesComments } from '../../components/Utterance';
 
 interface Post {
   firstPublicationDate: string | null;
@@ -72,6 +73,7 @@ export default function Post(props: PostProps) {
           </div>
         </div>
       </div>
+      <UtterancesComments />
     </>
   );
 }
