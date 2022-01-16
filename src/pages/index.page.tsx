@@ -1,7 +1,6 @@
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import Head from 'next/head';
 
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { BiUser } from 'react-icons/bi';
@@ -38,26 +37,31 @@ export default function Home({ postsPagination, preview }: HomeProps) {
   const { results } = postsPagination;
 
   return (
-    <div className={styles.container}>
-      {results.map(post => (
-        <div className={styles.box} key={post.slug}>
-          <Link href={`/post/${post.slug}`}>
-            <a className={styles.title}>{post.data.title}</a>
-          </Link>
-          <span className={styles.soonDescription}>{post.data.subtitle}</span>
+    <>
+      <Head>
+        <title>JvBlog | Inicio</title>
+      </Head>
+      <div className={styles.container}>
+        {results.map(post => (
+          <div className={styles.box} key={post.slug}>
+            <Link href={`/post/${post.slug}`}>
+              <a className={styles.title}>{post.data.title}</a>
+            </Link>
+            <span className={styles.soonDescription}>{post.data.subtitle}</span>
 
-          <div className={commonStyles.userDate}>
-            <time className={commonStyles.time}>
-              <AiOutlineCalendar size={18} /> {post.firstPublicationDate}
-            </time>
-            <span className={commonStyles.author}>
-              <BiUser size={18} /> {post.data.author}
-            </span>
+            <div className={commonStyles.userDate}>
+              <time className={commonStyles.time}>
+                <AiOutlineCalendar size={18} /> {post.firstPublicationDate}
+              </time>
+              <span className={commonStyles.author}>
+                <BiUser size={18} /> {post.data.author}
+              </span>
+            </div>
           </div>
-        </div>
-      ))}
-      {preview && <Preview />}
-    </div>
+        ))}
+        {preview && <Preview />}
+      </div>
+    </>
   );
 }
 
