@@ -12,6 +12,7 @@ import Prismic from '@prismicio/client';
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
 import { formatDate } from '../utils/formatDate';
+import { Preview } from '../components/Preview';
 
 interface Post {
   slug?: string;
@@ -30,9 +31,10 @@ interface PostPagination {
 
 interface HomeProps {
   postsPagination: PostPagination;
+  preview: boolean;
 }
 
-export default function Home({ postsPagination }: HomeProps) {
+export default function Home({ postsPagination, preview }: HomeProps) {
   const { results } = postsPagination;
 
   return (
@@ -54,17 +56,22 @@ export default function Home({ postsPagination }: HomeProps) {
           </div>
         </div>
       ))}
+      {preview && <Preview />}
     </div>
   );
 }
 
-export const getStaticProps: GetStaticProps = async ctx => {
+export const getStaticProps: GetStaticProps<HomeProps> = async ({
+  preview = false,
+  previewData,
+}) => {
   const prismic = getPrismicClient();
   const postsResponse = await prismic.query(
     [Prismic.predicates.at('document.type', 'posts')],
     {
       fetch: ['publication.title', 'publication.content'],
       pageSize: 100,
+      ref: previewData?.ref ?? null,
     }
   );
 
@@ -84,6 +91,7 @@ export const getStaticProps: GetStaticProps = async ctx => {
         nextPage: postsResponse.next_page,
         results: posts,
       },
+      preview,
     },
   };
 };

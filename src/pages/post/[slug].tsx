@@ -14,6 +14,7 @@ import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
 import { formatDate } from '../../utils/formatDate';
 import { UtterancesComments } from '../../components/Utterance';
+import { Preview } from '../../components/Preview';
 
 interface Post {
   firstPublicationDate: string | null;
@@ -34,10 +35,11 @@ interface Post {
 
 interface PostProps {
   post: Post;
+  preview: boolean;
 }
 
 export default function Post(props: PostProps) {
-  const { post } = props;
+  const { post, preview } = props;
 
   return (
     <>
@@ -74,6 +76,8 @@ export default function Post(props: PostProps) {
         </div>
       </div>
       <UtterancesComments />
+
+      {preview && <Preview />}
     </>
   );
 }
@@ -98,11 +102,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async context => {
-  const { slug } = context.params;
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+  previewData,
+}) => {
+  const { slug } = params;
 
   const prismic = getPrismicClient();
-  const response = await prismic.getByUID('posts', String(slug), {});
+  const response = await prismic.getByUID('posts', String(slug), {
+    ref: previewData?.ref ?? null,
+  });
 
   const content = response.data.content.map(c => ({
     heading: c.heading,
@@ -124,7 +134,7 @@ export const getStaticProps: GetStaticProps = async context => {
   };
 
   return {
-    props: { post },
+    props: { post, preview },
     revalidate: 60 * 30,
   };
 };

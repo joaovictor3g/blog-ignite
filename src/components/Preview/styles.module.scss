@@ -1,0 +1,19 @@
+.previewMode {
+  max-width: 1120px;
+  margin: 60px auto;
+
+  width: 100%;
+  display: flex;
+
+  a {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    background: var(--heading);
+    color: var(--background);
+    font-weight: 600;
+    font-size: 1.8rem;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+}
