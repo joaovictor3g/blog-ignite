@@ -40,6 +40,14 @@ export default function Home({ postsPagination, preview }: HomeProps) {
     <>
       <Head>
         <title>JvBlog | Inicio</title>
+        <meta
+          name="description"
+          content="Blog developed by João Victor during Ignite"
+          key="desc"
+          property="og:description"
+        />
+        <meta property="og:title" content="João Victor Blog" />
+        <meta property="og:image" content="/Capa.png" />
       </Head>
       <div className={styles.container}>
         {results.map(post => (
