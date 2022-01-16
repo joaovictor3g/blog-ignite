@@ -8,7 +8,10 @@ import { ParsedUrlQuery, parse } from 'querystring';
 
 import { useRouter } from 'next/router';
 import { getPrismicClient } from '../../services/prismic';
-import Post, { getStaticProps, getStaticPaths } from '../../pages/post/[slug]';
+import Post, {
+  getStaticProps,
+  getStaticPaths,
+} from '../../pages/post/[slug].page';
 
 interface Post {
   firstPublicationDate: string | null;

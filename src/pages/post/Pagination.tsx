@@ -11,7 +11,10 @@ interface PaginationProps {
   previousPage: PostPagination;
 }
 
-export function Pagination({ nextPage, previousPage }: PaginationProps) {
+export const Pagination: React.FC<PaginationProps> = ({
+  nextPage,
+  previousPage,
+}) => {
   return (
     <div className={styles.paginate}>
       {!!previousPage && (
@@ -32,4 +35,4 @@ export function Pagination({ nextPage, previousPage }: PaginationProps) {
       )}
     </div>
   );
-}
+};

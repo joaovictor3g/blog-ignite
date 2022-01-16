@@ -2,7 +2,6 @@ import React from 'react';
 
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
 import { RichText } from 'prismic-dom';
 import Prismic from '@prismicio/client';
