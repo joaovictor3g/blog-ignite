@@ -1,5 +1,8 @@
+import React from 'react';
+
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import { RichText } from 'prismic-dom';
 import Prismic from '@prismicio/client';
@@ -15,9 +18,11 @@ import styles from './post.module.scss';
 import { formatDate } from '../../utils/formatDate';
 import { UtterancesComments } from '../../components/Utterance';
 import { Preview } from '../../components/Preview';
+import { Pagination } from './Pagination';
 
 interface Post {
   firstPublicationDate: string | null;
+  lastPublicationDate: string | null;
   data: {
     title: string;
     banner: {
@@ -36,10 +41,17 @@ interface Post {
 interface PostProps {
   post: Post;
   preview: boolean;
+  nextPage: PostPagination;
+  previousPage: PostPagination;
 }
 
+type PostPagination = {
+  uid: string;
+  title: string;
+};
+
 export default function Post(props: PostProps) {
-  const { post, preview } = props;
+  const { post, preview, nextPage, previousPage } = props;
 
   return (
     <>
@@ -61,23 +73,27 @@ export default function Post(props: PostProps) {
             <span className={commonStyles.readingTime}>
               <FiClock size={18} /> {post.data.readingTime} min
             </span>
+
+            <span className={commonStyles.editedAt}>
+              * editado em {post.lastPublicationDate}
+            </span>
           </div>
           <div className={styles.box}>
-            {post.data.content.map(content => (
-              <>
+            {post.data.content.map((content, i) => (
+              <React.Fragment key={i}>
                 <h3 className={styles.heading}>{content.heading}</h3>
                 <div
                   className={styles.body}
                   dangerouslySetInnerHTML={{ __html: content.body }}
                 />
-              </>
+              </React.Fragment>
             ))}
           </div>
         </div>
+        <Pagination nextPage={nextPage} previousPage={previousPage} />
+        <UtterancesComments />
+        {preview && <Preview />}
       </div>
-      <UtterancesComments />
-
-      {preview && <Preview />}
     </>
   );
 }
@@ -121,6 +137,10 @@ export const getStaticProps: GetStaticProps = async ({
 
   const post: Post = {
     firstPublicationDate: formatDate(new Date(response.first_publication_date)),
+    lastPublicationDate:
+      formatDate(new Date(response.last_publication_date)) +
+      ' às ' +
+      formatDate(new Date(response.last_publication_date), 'HH:mm'),
     data: {
       author: response.data.author,
       banner: {
@@ -133,8 +153,41 @@ export const getStaticProps: GetStaticProps = async ({
     },
   };
 
+  const allPosts = await prismic.query(
+    [Prismic.predicates.at('document.type', 'posts')],
+    {
+      fetch: ['publication.title', 'publication.content'],
+      pageSize: 100,
+      ref: previewData?.ref ?? null,
+    }
+  );
+
+  const currentIndex = allPosts.results.findIndex(p => p.uid === response.uid);
+
+  let nextPage = null;
+  let previousPage = null;
+
+  if (currentIndex >= 0) {
+    const nextValues = allPosts.results[currentIndex + 1];
+    const prevValues = allPosts.results[currentIndex - 1];
+
+    if (nextValues) {
+      nextPage = {
+        uid: nextValues.uid,
+        title: RichText.asText(allPosts.results[currentIndex + 1].data.title),
+      };
+    }
+
+    if (prevValues) {
+      previousPage = {
+        uid: prevValues.uid,
+        title: RichText.asText(allPosts.results[currentIndex - 1].data.title),
+      };
+    }
+  }
+
   return {
-    props: { post, preview },
+    props: { post, preview, nextPage, previousPage },
     revalidate: 60 * 30,
   };
 };

@@ -3,10 +3,12 @@
   display: flex;
   align-items: center;
   gap: 24px;
+  position: relative;
 
   .time,
   .author,
-  .readingTime {
+  .readingTime,
+  .editedAt {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -16,5 +18,13 @@
     line-height: 17px;
 
     color: var(--info);
+  }
+
+  .editedAt {
+    font-style: italic;
+
+    position: absolute;
+    top: 40px;
+    left: 0;
   }
 }
