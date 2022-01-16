@@ -4,6 +4,8 @@ import Head from 'next/head';
 import { RichText } from 'prismic-dom';
 import Prismic from '@prismicio/client';
 
+import useSWR from 'swr';
+
 import { getPrismicClient } from '../../services/prismic';
 
 import { AiOutlineCalendar } from 'react-icons/ai';
@@ -13,6 +15,7 @@ import { FiClock } from 'react-icons/fi';
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
 import { formatDate } from '../../utils/formatDate';
+import axios from 'axios';
 
 interface Post {
   firstPublicationDate: string | null;
